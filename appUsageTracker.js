@@ -1,61 +1,21 @@
 const fn = require("./utils")
+const { scheduleReset, clearTimers } = require('./additionalFeatures')
 
 const apps = {
     "social" : {
-        "facebook": "1h",
-        "instagram": "30m",
-        "snapchat": "15m"
+        "facebook": 60,
+        "instagram": 30,
+        "snapchat": 15
     },
     "productivity" : {
-        "slack": "1h15m",
-        "googledocs": "50m",
-        "zoom": "1h"
+        "slack": 75,
+        "googledocs": 50,
+        "zoom": 60
     },
     "entertainment" : {
-        "youtube": "2h",
-        "netflix": "45m",
-        "spotify": "1h30m"
-    }
-}
-let intervalID, timeoutID
-
-function resetAppsTime(){
-    for(const category in apps){
-        for(const app in apps[category]){
-            apps[category][app] = "0m"
-        }
-    }
-}
-
-function scheduleReset(){
-    const now = new Date()
-    const midNight = new Date(now)
-    midNight.setHours(24,0,0,0)
-
-    const timeUntilMidnight = midNight - now
-
-    timeoutID = setTimeout(() => {
-        resetAppsTime()
-
-        if(intervalID){
-            clearInterval(intervalID)
-        }
-
-        intervalID = setInterval(() => {
-            resetAppsTime()
-        }, 86400000)
-
-    }, timeUntilMidnight)
-}
-
-function clearTimers() {
-    if (timeoutID){
-        clearTimeout(timeoutID)
-        timeoutID = null
-    }
-    if (intervalID){
-        clearInterval(intervalID)
-        intervalID = null
+        "youtube": 120,
+        "netflix": 45,
+        "spotify": 90
     }
 }
 
@@ -76,14 +36,11 @@ function logAppUsage(category, appName, usageTime){
     return apps[convertedCategory]
 }
 
-scheduleReset()
-clearTimers()
+// scheduleReset()
+// clearTimers()
 // console.log(logAppUsage("entertainment", "spotify", "15"))
 
 module.exports = {
     apps,
     logAppUsage,
-    resetAppsTime,
-    scheduleReset,
-    clearTimers,
 }

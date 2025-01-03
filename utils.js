@@ -21,11 +21,11 @@ function formatTime(hours, mins){
 }
 
 function addUsageTimeToTotal(usageTime, totalTime){
-    const [totalHours, totalMinutes] = parseTime(totalTime)
+    // const [totalHours, totalMinutes] = parseTime(totalTime)
 
-    const addedMins = totalMinutes + Number(usageTime)
+    const addedMins = totalTime + Number(usageTime)
 
-    return formatTime(totalHours, addedMins)
+    return addedMins
 }
 
 module.exports = {

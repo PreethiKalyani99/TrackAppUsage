@@ -1,7 +1,7 @@
-const fn = require('../appUsageTracker')
+import { logAppUsage } from "../appUsageTracker"
 
 test("should return the original object when category does not match", () => {
-    expect(fn.logAppUsage("Shopping", "Amazon", "30")).toEqual({
+    expect(logAppUsage("Shopping", "Amazon", "30")).toEqual({
         "social": {
             "facebook": 60,
             "instagram": 30,
@@ -21,7 +21,7 @@ test("should return the original object when category does not match", () => {
 })
 
 test("should return given category from original object when app name does not match", () => {
-    expect(fn.logAppUsage("Social", "Spotify", "1")).toEqual({
+    expect(logAppUsage("Social", "Spotify", "1")).toEqual({
         "facebook": 60,
         "instagram": 30,
         "snapchat": 15
@@ -29,7 +29,7 @@ test("should return given category from original object when app name does not m
 })
 
 test("should add usage time to the total time when the given category and app name match", () => {
-    expect(fn.logAppUsage("entertainment", "spotify", "15")).toEqual({
+    expect(logAppUsage("entertainment", "spotify", "15")).toEqual({
         "youtube": 120,
         "netflix": 45,
         "spotify": 105

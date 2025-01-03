@@ -1,50 +1,97 @@
-const { resetAppsTime, scheduleReset, mostUsedCategory, getCategorySummary } = require('../additionalFeatures')
-const { apps } = require('../appUsageTracker')
+import { 
+    resetAppsTime,
+    scheduleReset,
+    mostUsedCategory,
+    getCategorySummary,
+} from "../additionalFeatures"
 
-jest.mock('../appUsageTracker', () => ({
-    apps: {
-        "social": {
+test("should reset all apps time", () => {
+    const apps = {
+        "social" : {
             "facebook": 60,
             "instagram": 30,
             "snapchat": 15
         },
-        "productivity": {
-            "slack": 75,
-            "googledocs": 50,
-            "zoom": 60
-        },
-        "entertainment": {
+        "entertainment" : {
             "youtube": 120,
             "netflix": 45,
             "spotify": 90
         }
     }
-}))
+    resetAppsTime(apps)
 
+    expect(apps.social.facebook).toBe(0)
+    expect(apps.entertainment.spotify).toBe(0)
+})
 
-// jest.useFakeTimers()
+test("should schedule a reset", () => {
+    jest.useFakeTimers()
+    const apps = {
+        "social" : {
+            "facebook": 60,
+            "instagram": 30,
+            "snapchat": 15
+        },
+        "entertainment" : {
+            "youtube": 120,
+            "netflix": 45,
+            "spotify": 90
+        }
+    }
+    const delay = 3000
 
-// test("should reset all apps time", () => {
-//     resetAppsTime()
+    scheduleReset(apps, delay)
 
-//     jest.advanceTimersByTime(1000)
-//     expect(apps.social.facebook).toBe(0)
-//     expect(apps.entertainment.spotify).toBe(0)
-// })
+    expect(apps.social.facebook).toBe(60)
+    expect(apps.entertainment.spotify).toBe(90)
 
-// test("should schedule a reset", () => {
-//     scheduleReset()
-//     jest.advanceTimersByTime(5000)
-//     expect(apps.social.facebook).toBe(0)
-//     expect(apps.entertainment.spotify).toBe(0)
-// })
+    jest.advanceTimersByTime(delay)
+
+    expect(apps.social.facebook).toBe(0)
+    expect(apps.entertainment.spotify).toBe(0)
+    jest.useRealTimers()
+})
 
 test("should return most used category", () => {
-    expect(mostUsedCategory()).toEqual({category : "entertainment", totalTime: 255})
+    const apps = {
+        "social" : {
+            "facebook": 60,
+            "instagram": 30,
+            "snapchat": 15
+        },
+        "productivity" : {
+            "slack": 75,
+            "googledocs": 50,
+            "zoom": 60
+        },
+        "entertainment" : {
+            "youtube": 120,
+            "netflix": 45,
+            "spotify": 90
+        }
+    }
+    expect(mostUsedCategory(apps)).toEqual({category : "entertainment", totalTime: 255})
 })
 
 test("should generate summary of all categories and their respective usage times", () => {
-    expect(getCategorySummary()).toEqual({
+    const apps = {
+        "social" : {
+            "facebook": 60,
+            "instagram": 30,
+            "snapchat": 15
+        },
+        "productivity" : {
+            "slack": 75,
+            "googledocs": 50,
+            "zoom": 60
+        },
+        "entertainment" : {
+            "youtube": 120,
+            "netflix": 45,
+            "spotify": 90
+        }
+    }
+    expect(getCategorySummary(apps)).toEqual({
         "social": 105,
         "productivity": 185,
         "entertainment": 255

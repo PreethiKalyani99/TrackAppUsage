@@ -1,3 +1,5 @@
+const fn = require("./utils")
+
 const apps = {
     "social" : {
         "facebook": "1h",
@@ -15,52 +17,73 @@ const apps = {
         "spotify": "1h30m"
     }
 }
+let intervalID, timeoutID
 
-function parseTime(input){
-    let hours = 0, minutes = 0
-    const timeParts = input.match(/(\d+)(h|m)/g) || []
-
-    timeParts.forEach(time => {
-        if(time.endsWith('h')){
-            hours += parseInt(time)
+function resetAppsTime(){
+    for(const category in apps){
+        for(const app in apps[category]){
+            apps[category][app] = "0m"
         }
-        else if(time.endsWith('m')){
-            minutes += parseInt(time)
-        }
-    })
-    return [hours, minutes]
+    }
 }
 
-function formatTime(hours, mins){
-    const hrs = hours + Math.floor(mins / 60)
-    const min = mins % 60
+function scheduleReset(){
+    const now = new Date()
+    const midNight = new Date(now)
+    midNight.setHours(24,0,0,0)
 
-    return  `${hrs}h${min}m`
+    const timeUntilMidnight = midNight - now
+
+    timeoutID = setTimeout(() => {
+        resetAppsTime()
+
+        if(intervalID){
+            clearInterval(intervalID)
+        }
+
+        intervalID = setInterval(() => {
+            resetAppsTime()
+        }, 86400000)
+
+    }, timeUntilMidnight)
+}
+
+function clearTimers() {
+    if (timeoutID){
+        clearTimeout(timeoutID)
+        timeoutID = null
+    }
+    if (intervalID){
+        clearInterval(intervalID)
+        intervalID = null
+    }
 }
 
 function logAppUsage(category, appName, usageTime){
     const convertedCategory = category.toLowerCase()
     const convertedAppName = appName.toLowerCase()
-
+    
     if(!apps[convertedCategory]) {
         return apps
     }
     if(!apps[convertedCategory][convertedAppName]){
         return apps[convertedCategory]
     }
-    
-    const [hours, minutes] = parseTime(usageTime)
-    const [totalHours, totalMinutes] = parseTime(apps[convertedCategory][convertedAppName])
 
-    const addedHours = totalHours + hours
-    const addedMins = totalMinutes + minutes
-
-    const updatedTime = formatTime(addedHours, addedMins)
+    const updatedTime = fn.addUsageTimeToTotal(usageTime, apps[convertedCategory][convertedAppName])
 
     apps[convertedCategory][convertedAppName] = updatedTime
     return apps[convertedCategory]
 }
 
-console.log(logAppUsage("Shopping", "Amazon", "30m"))
-console.log(logAppUsage("Social", "Spotify", "1h"))
-console.log(logAppUsage("entertainment", "spotify", "15m"))
+scheduleReset()
+clearTimers()
+// console.log(logAppUsage("entertainment", "spotify", "15"))
+
+module.exports = {
+    apps,
+    logAppUsage,
+    resetAppsTime,
+    scheduleReset,
+    clearTimers,
+}

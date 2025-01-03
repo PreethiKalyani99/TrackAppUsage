@@ -1,25 +1,24 @@
-const fn = require("./utils")
-const { scheduleReset, clearTimers } = require('./additionalFeatures')
+import { addUsageTimeToTotal } from "./utils"
 
-const apps = {
-    "social" : {
-        "facebook": 60,
-        "instagram": 30,
-        "snapchat": 15
-    },
-    "productivity" : {
-        "slack": 75,
-        "googledocs": 50,
-        "zoom": 60
-    },
-    "entertainment" : {
-        "youtube": 120,
-        "netflix": 45,
-        "spotify": 90
+export function logAppUsage(category, appName, usageTime){
+    const apps = {
+        "social" : {
+            "facebook": 60,
+            "instagram": 30,
+            "snapchat": 15
+        },
+        "productivity" : {
+            "slack": 75,
+            "googledocs": 50,
+            "zoom": 60
+        },
+        "entertainment" : {
+            "youtube": 120,
+            "netflix": 45,
+            "spotify": 90
+        }
     }
-}
 
-function logAppUsage(category, appName, usageTime){
     const convertedCategory = category.toLowerCase()
     const convertedAppName = appName.toLowerCase()
     
@@ -30,17 +29,10 @@ function logAppUsage(category, appName, usageTime){
         return apps[convertedCategory]
     }
 
-    const updatedTime = fn.addUsageTimeToTotal(usageTime, apps[convertedCategory][convertedAppName])
+    const updatedTime = addUsageTimeToTotal(usageTime, apps[convertedCategory][convertedAppName])
 
     apps[convertedCategory][convertedAppName] = updatedTime
     return apps[convertedCategory]
 }
 
-// scheduleReset()
-// clearTimers()
 // console.log(logAppUsage("entertainment", "spotify", "15"))
-
-module.exports = {
-    apps,
-    logAppUsage,
-}

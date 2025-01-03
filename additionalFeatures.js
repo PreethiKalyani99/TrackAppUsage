@@ -1,8 +1,6 @@
-const { apps } = require('./appUsageTracker')
+let timeoutID
 
-let intervalID, timeoutID
-
-function resetAppsTime(){
+function resetAppsTime(apps){
     for(const category in apps){
         for(const app in apps[category]){
             apps[category][app] = 0
@@ -10,24 +8,11 @@ function resetAppsTime(){
     }
 }
 
-function scheduleReset(){
-    const now = new Date()
-    const midNight = new Date(now)
-    midNight.setHours(24,0,0,0)
-
-    const timeUntilMidnight = midNight - now
+function scheduleReset(apps, delay){
 
     timeoutID = setTimeout(() => {
-
-        if(intervalID){
-            clearInterval(intervalID)
-        }
-
-        intervalID = setInterval(() => {
-            resetAppsTime(apps)
-        }, 86400000)
-
-    }, timeUntilMidnight)
+        resetAppsTime(apps)
+    }, delay)
 }
 
 function clearTimers() {
@@ -41,7 +26,7 @@ function clearTimers() {
     }
 }
 
-function getCategorySummary(){
+function getCategorySummary(apps){
     const categorySummary = {}
     for(const category in apps){
         let temp = 0
@@ -55,22 +40,20 @@ function getCategorySummary(){
     return categorySummary
 }
 
-function mostUsedCategory() {
-    const obj = getCategorySummary()
+function mostUsedCategory(apps) {
+    const summary = getCategorySummary(apps)
 
-    return Object.entries(obj).reduce((acc, [key, value]) => {
+    return Object.entries(summary).reduce((acc, [key, value]) => {
         return value > acc.totalTime 
             ? { category: key, totalTime: value }
             : acc
     }, { category: '', totalTime: 0 })
 }
 
-
-
-module.exports = {
+export {
     resetAppsTime,
     scheduleReset,
     clearTimers,
+    getCategorySummary,
     mostUsedCategory,
-    getCategorySummary
 }

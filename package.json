@@ -1,0 +1,14 @@
+{
+  "name": "app-usage-tracker",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "preethikalyani99@gmail.com",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

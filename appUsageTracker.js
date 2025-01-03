@@ -23,16 +23,16 @@ export function logAppUsage(category, appName, usageTime){
     const convertedAppName = appName.toLowerCase()
     
     if(!apps[convertedCategory]) {
-        return apps
+        return { status: "Failed", reason: `${category} category does not exist` }
     }
     if(!apps[convertedCategory][convertedAppName]){
-        return apps[convertedCategory]
+        return { status: "Failed", reason: `${appName} does not belong to ${category} category` }
     }
 
     const updatedTime = addUsageTimeToTotal(usageTime, apps[convertedCategory][convertedAppName])
 
     apps[convertedCategory][convertedAppName] = updatedTime
-    return apps[convertedCategory]
+    return { status: "Success", reason: `Added usage time for ${appName} in the ${category} category` }
 }
 
 // console.log(logAppUsage("entertainment", "spotify", "15"))

@@ -10,5 +10,9 @@
   "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "babel-jest": "^29.7.0"
   }
 }

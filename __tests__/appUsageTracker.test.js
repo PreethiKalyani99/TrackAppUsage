@@ -1,10 +1,10 @@
 import { logAppUsage } from "../appUsageTracker"
 
-test("should return the original object when category does not match", () => {
+test("should return failed status when category does not match", () => {
     expect(logAppUsage("Shopping", "Amazon", "30")).toEqual({"status": "Failed", "reason": "Shopping category does not exist"})
 })
 
-test("should return given category from original object when app name does not match", () => {
+test("should return failed status when app name does not match", () => {
     expect(logAppUsage("Social", "Spotify", "1")).toEqual({"status": "Failed", "reason": "Spotify does not belong to Social category"})
 })
 

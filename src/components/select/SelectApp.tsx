@@ -4,6 +4,7 @@ import { useCategory } from "../../hooks/useCategory";
 import { useApp } from "../../hooks/useApp";
 import Select from "../common/select/Select";
 import SetLimit from "../limit/SetLimit";
+import styles from "./Select.module.css"
 
 export default function SelectApp() {
     const [showLimit, setShowLimit] = useState<boolean>(false)
@@ -44,15 +45,15 @@ export default function SelectApp() {
         })
     }
     return (
-        <div className="select-app-container">
+        <div className={styles.select_app_container}>
             <Select
                 options={options}
                 selectedOption={selectedApp}
                 setSelectedOption={setSelectedApp}
                 placeholder="Select App"
-                className="select-box"
+                className={styles.select_box}
             />
-            <div className="limit-container">
+            <div className={styles.limit_container}>
                 {showLimit &&
                     <SetLimit
                         type="app"

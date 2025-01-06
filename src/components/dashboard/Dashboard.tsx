@@ -3,7 +3,7 @@ import SelectCategory from "../select/SelectCategory"
 import Alert from "../common/alert/Alert"
 import { useLimit } from "../../hooks/useLimit"
 import { useData } from "../../hooks/useData"
-import "../../App.css"
+import styles from "./Dashboard.module.css"
 
 
 export default function Dashboard() {
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className="container">
+            <div className={styles.container}>
                 <CategorySummary data={data} />
                 <SelectCategory/>
             </div>

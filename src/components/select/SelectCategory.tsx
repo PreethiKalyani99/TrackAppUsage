@@ -9,8 +9,8 @@ import styles from "./Select.module.css"
 
 export default function SelectCategory() {
     const [showLimit, setShowLimit] = useState<boolean>(false)
-        const [showApps, setShowApps] = useState<boolean>(false)
-    
+    const [showApps, setShowApps] = useState<boolean>(false)
+
     const { data, setData } = useData()
 
     const { setSelectedApp } = useApp()
@@ -53,12 +53,12 @@ export default function SelectCategory() {
                         name={selectedCategory}
                         limit={data[selectedCategory]?.categoryLimit}
                         onSave={handleLimitUpdate}
-                        // isAlertVisible={isAlertVisible}
-                        // setIsAlertVisible={setIsAlertVisible}
                     />}
                 </div>
             </div>
-            {showApps && <SelectApp />}
+            {showApps &&
+                <SelectApp />
+            }
         </>
     )
 }

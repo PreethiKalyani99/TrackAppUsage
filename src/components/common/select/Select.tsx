@@ -41,7 +41,7 @@ export default function Select({
     const toggleOption = () => setIsOptionVisible(true)
 
     return (
-        <div className={`${styles.container} ${className}`}>
+        <div className={`${className}`}>
 
             <div
                 className={`${styles.select_box} ${focused ? styles.focused : ""}`}

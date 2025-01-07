@@ -2,27 +2,27 @@ import { Apps } from "../types/types"
 
 export const categoriesAndApps: Apps = {
     "social": {
-        categoryLimit: 0,
+        categoryLimit: Infinity,
         apps: {
-            "facebook": { usageTime: 60, limit: 0 },
-            "instagram": { usageTime: 30, limit: 0 },
-            "snapchat": { usageTime: 15, limit: 0 }
+            "facebook": { usageTime: 60, limit: Infinity },
+            "instagram": { usageTime: 30, limit: Infinity },
+            "snapchat": { usageTime: 15, limit: Infinity }
         }
     },
     "productivity": {
-        categoryLimit: 0,
+        categoryLimit: Infinity,
         apps: {
-            "slack": { usageTime: 75, limit: 0 },
-            "googledocs": { usageTime: 50, limit: 0 },
-            "zoom": { usageTime: 60, limit: 0 }
+            "slack": { usageTime: 75, limit: Infinity },
+            "googledocs": { usageTime: 50, limit: Infinity },
+            "zoom": { usageTime: 60, limit: Infinity }
         }
     },
     "entertainment": {
-        categoryLimit: 0,
+        categoryLimit: Infinity,
         apps: {
-            "youtube": { usageTime: 120, limit: 0 },
-            "netflix": { usageTime: 45, limit: 0 },
-            "spotify": { usageTime: 90, limit: 0 }
+            "youtube": { usageTime: 120, limit: Infinity },
+            "netflix": { usageTime: 45, limit: Infinity },
+            "spotify": { usageTime: 90, limit: Infinity }
         }
     }
 }

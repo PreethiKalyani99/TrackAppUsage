@@ -42,7 +42,6 @@ export default function Select({
 
     return (
         <div className={`${className}`}>
-
             <div
                 className={`${styles.select_box} ${focused ? styles.focused : ""}`}
                 onFocus={handleFocus}
@@ -96,13 +95,11 @@ interface SelectedOptionProps {
 
 function SelectedOption({ option }: SelectedOptionProps) {
     return (
-        <>
-            <div
-                key={option}
-            >
-                {option}
-            </div>
-        </>
+        <div
+            key={option}
+        >
+            {option}
+        </div>
     )
 }
 

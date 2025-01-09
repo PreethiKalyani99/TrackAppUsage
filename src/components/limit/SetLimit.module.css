@@ -1,0 +1,23 @@
+.input_box{
+    width: 50px;  
+    padding: 5px;
+    border: 1px solid #007bff;
+    outline: none;  
+    margin-left: 10px;
+}
+
+.save_btn{
+    border: none;
+    outline: none;
+    margin-left: 5px;
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+
+.limit_container{
+    display: flex;
+    align-items: center;
+}

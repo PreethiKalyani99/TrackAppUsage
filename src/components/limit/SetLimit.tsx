@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react"
+import styles from "./SetLimit.module.css"
+
 interface LimitProps {
     type: string
     name: string
@@ -25,14 +27,25 @@ export default function SetLimit({ name, limit, onSave }: LimitProps) {
     const handleSave = () => {
         onSave(timeLimit)
     }
-    
+
     return (
         <div>
-            <div>
-                <span>Enter limit in mins</span>
-                <input type="text" value={timeLimit === Infinity ? 0 : timeLimit} onChange={handleChange} />
+            <span>Enter limit in mins</span>
+            <div className={styles.limit_container}>
+            <input
+                type="text"
+                className={styles.input_box}
+                value={timeLimit === Infinity ? 0 : timeLimit}
+                onChange={handleChange}
+            />
+                <button
+                    className={styles.save_btn}
+                    onClick={handleSave}
+                    disabled={timeLimit === limit}
+                >
+                    Save
+                </button>
             </div>
-            <button onClick={handleSave} disabled={timeLimit === limit}>Save</button>
         </div>
     )
 }

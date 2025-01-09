@@ -37,12 +37,6 @@
     border-radius: 6px;
 }
 
-.option,
-.multi_option {
-    cursor: pointer;
-    padding: 10px 50px;
-}
-
 .option:hover{
     background-color: #7eaefc80;
     color: white;
@@ -90,4 +84,20 @@ label,
     color: #007bff;
     background-color: white;
     padding: 0 5px;
+}
+
+@media (min-width: 1000px) { /* Large screen */
+    .option,
+.multi_option {
+    cursor: pointer;
+    padding: 10px 50px;
+}
+}
+
+@media (max-width: 900px) { /* small screen */
+    .option,
+    .multi_option {
+        cursor: pointer;
+        padding: 10px;
+    }
 }

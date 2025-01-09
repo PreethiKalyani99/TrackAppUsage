@@ -13,8 +13,12 @@ export default function Dashboard() {
     return (
         <>
             <div className={styles.container}>
-                <CategorySummary data={data} />
-                <SelectCategory/>
+                <div>
+                    <CategorySummary data={data} />
+                </div>
+                <div className={styles.category_container}>
+                    <SelectCategory/>
+                </div>
             </div>
             {isAlertVisible &&
                 <Alert

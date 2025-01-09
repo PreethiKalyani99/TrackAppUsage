@@ -7,6 +7,10 @@ import { useCategory } from "../../hooks/useCategory";
 import { useApp } from "../../hooks/useApp"
 import styles from "./Select.module.css"
 
+interface App {
+    usageTime: number
+    limit: number
+}
 export default function SelectCategory() {
     const [showLimit, setShowLimit] = useState<boolean>(false)
     const [showApps, setShowApps] = useState<boolean>(false)
@@ -36,6 +40,26 @@ export default function SelectCategory() {
         })
     }
 
+    const handleResetLimit = () => {
+        const resetAppsLimit = Object.entries(data[selectedCategory].apps).reduce((acc, [key, value]) => {
+            acc[key] = {
+                ...value,
+                limit: Infinity,
+            }
+            return acc
+        }, {} as Record<string, App>)
+        
+        setData((prevData) => {
+            return {
+                ...prevData,
+                [selectedCategory]: {
+                    categoryLimit: Infinity,
+                    apps: resetAppsLimit
+                }
+            }
+        })
+    }
+
     return (
         <>
             <div className={styles.select_app_container}>
@@ -48,12 +72,17 @@ export default function SelectCategory() {
                     className={styles.select_box}
                 />
                 <div className={styles.limit_container}>
-                    {showLimit && <SetLimit
-                        type="category"
-                        name={selectedCategory}
-                        limit={data[selectedCategory]?.categoryLimit}
-                        onSave={handleLimitUpdate}
-                    />}
+                    {showLimit &&
+                        <div>
+                            <SetLimit
+                                type="category"
+                                name={selectedCategory}
+                                limit={data[selectedCategory]?.categoryLimit}
+                                onSave={handleLimitUpdate}
+                            />
+                            <button onClick={handleResetLimit}>Reset all limits in {selectedCategory} category</button>
+                        </div>
+                    }
                 </div>
             </div>
             {showApps &&

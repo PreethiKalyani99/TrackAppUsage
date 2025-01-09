@@ -48,6 +48,7 @@ export default function SelectApp() {
             }
         })
     }
+
     return (
         <div className={styles.select_app_container}>
             <Select
@@ -71,6 +72,7 @@ export default function SelectApp() {
             {(showUsage && showLimit) &&
                 <div>
                     <AddUsageTime />
+                    <button onClick={() => handleLimitUpdate(Infinity)}>Reset {selectedApp} limit</button>
                 </div>
             }
         </div>
